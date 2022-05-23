@@ -46,13 +46,7 @@
     </Window.Resources>
     
     <DockPanel>
-        <!--<dxdo:DockLayoutManager x:Name="DemoDockContainer"
-                                FloatingMode="Desktop"
-                                FloatingDocumentContainer="{Binding SelectedItem.Id, ElementName=floatingDocumentContainerListBox}"
-                                RedrawContentWhenResizing="{Binding IsChecked, ElementName=redrawContentWhenResizingCheck}"
-                                ShowContentWhenDragging="{Binding IsChecked, ElementName=showContentWhenDraggingCheck}"
-                                ViewStyle="{Binding SelectedItem.Id, ElementName=viewStyleListBox}"
-                                >-->
+        
             <dxdo:DockLayoutManager x:Name="DemoDockContainer"
                                 FloatingMode="Desktop"   Margin="0" Padding="0" DockOperationCompleted="DemoDockContainer_DockOperationCompleted" 
                                     ActiveLayoutItem="{Binding PanelHostController.SelectedDocumentPanel, Mode=TwoWay}"
@@ -60,26 +54,8 @@
                                     OwnsFloatWindows="False"
                                 >
             <dxdo:LayoutGroup>
-                <dxdo:LayoutPanel Name="toolboxPanel" Caption="Toolbox" CaptionImage="{dx:SvgImageSource Uri='pack://application:,,,/DevExpress.Images.v21.2;component/SvgImages/Dashboards/InsertTabContainer.svg'}">
-                    <dxa:AccordionControl Margin="3" RootItemDisplayMode="Item">
-                        <dxa:AccordionItem Header="Common" IsExpanded="True">
-                            <!--<dxa:AccordionItem Header="Control" Glyph="/DockingDemo;component/Images/Toolbox/Control.svg"/>
-                            <dxa:AccordionItem Header="CheckBox" Glyph="/DockingDemo;component/Images/Toolbox/CheckBox.svg"/>
-                            <dxa:AccordionItem Header="Label" Glyph="/DockingDemo;component/Images/Toolbox/Label.svg"/>
-                            <dxa:AccordionItem Header="Panel" Glyph="/DockingDemo;component/Images/Toolbox/Panel.svg"/>
-                            <dxa:AccordionItem Header="Image" Glyph="/DockingDemo;component/Images/Toolbox/PictureBox.svg"/>-->
-                        </dxa:AccordionItem>
-                        <dxa:AccordionItem Header="Controls">
-                            <!--<dxa:AccordionItem Header="Canvas" Glyph="/DockingDemo;component/Images/Toolbox/Canvas.svg"/>
-                            <dxa:AccordionItem Header="Chart" Glyph="/DockingDemo;component/Images/Toolbox/Chart.svg"/>
-                            <dxa:AccordionItem Header="RichText" Glyph="/DockingDemo;component/Images/Toolbox/RichText.svg"/>
-                            <dxa:AccordionItem Header="Grid" Glyph="/DockingDemo;component/Images/Toolbox/Table.svg"/>-->
-                        </dxa:AccordionItem>
-                        <dxa:AccordionItem Header="General" IsExpanded="True">
-                            <!--<dxa:AccordionItem Header="Line" Glyph="/DockingDemo;component/Images/Toolbox/Line.svg"/>
-                            <dxa:AccordionItem Header="Shape" Glyph="/DockingDemo;component/Images/Toolbox/Shape.svg"/>-->
-                        </dxa:AccordionItem>
-                    </dxa:AccordionControl>
+                <dxdo:LayoutPanel Name="toolboxPanel" ItemWidth="3*" Caption="Toolbox" CaptionImage="{dx:SvgImageSource Uri='pack://application:,,,/DevExpress.Images.v21.2;component/SvgImages/Dashboards/InsertTabContainer.svg'}">
+                   
                 </dxdo:LayoutPanel>
                 <dxdo:DocumentGroup Name="documentContainer" 
                                     DestroyOnClosingChildren="False"
