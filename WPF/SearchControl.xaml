@@ -1,0 +1,84 @@
+﻿<UserControl x:Class="Shell.SearchControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+            xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+             xmlns:dxa="http://schemas.devexpress.com/winfx/2008/xaml/accordion"
+              xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
+             xmlns:local="clr-namespace:Shell"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <StackPanel>
+        <local:SearchControlBase x:Name="ViewSearchPanel"
+                                 Width="200" 
+                                 IsTextEditable="True"
+                                 NullText="Search"
+                                 EditValueChanged="SearchControlBase_EditValueChanged"
+                                 EditValuePostDelay="500"
+                                 >
+            <local:SearchControlBase.StyleSettings>
+                <local:PopupBaseEditStyleSettingsEx/>
+            </local:SearchControlBase.StyleSettings>
+            <!--<local:SearchControlBase.EditTemplate>
+                <ControlTemplate>
+                    <Grid Focusable="False">
+                        <StackPanel Margin="10">
+                            <dxe:DateEdit/>
+                            <dxe:DateEdit Mask="hh:mmtt"/>
+                        </StackPanel>
+                    </Grid>
+                </ControlTemplate>
+            </local:SearchControlBase.EditTemplate>-->
+
+            <local:SearchControlBase.PopupContentTemplate>
+                <ControlTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <dxa:AccordionControl x:Name="PART_SearchContent"
+                                              Width="400"                                              
+                                              ItemsSource="{Binding Items}" 
+                                              SelectedItem="{Binding SelectedItem}"
+                                              ChildrenPath="Nodes" DisplayMemberPath="Header"
+                                              IsCollapseButtonVisible="False"                                              
+                                              AutoExpandAllItems="True"
+                                              ExpandItemOnHeaderClick="False"
+                                              CollapsedItemClickAction="Select" Margin="0,0,10,0"
+                                              ShowSearchControl="False"
+                                              ViewMode="NavigationPane" 
+                                              SummaryItemHeader="Text"
+                                              
+                                              
+                                              
+                                              
+                              
+                              >
+                            <!--<dxa:AccordionControl.HeaderStyle>
+                                <Style TargetType="dxa:HeaderPresenter" >
+                                    <Setter Property="Background" Value="#e6f2fa"/>
+                                    <Setter Property="Foreground" Value="Brown"/>
+                                    <Setter Property="BorderBrush" Value="#51555f"/>
+                                    <Setter Property="BorderThickness" Value="0,0,0,1"/>
+                                </Style>
+                            </dxa:AccordionControl.HeaderStyle>-->
+                            <!--<dxa:AccordionControl.ItemContainerStyle>
+                                <Style TargetType="dxa:AccordionItem">
+                                    <Setter Property="Foreground" Value="Red"/>
+                                    <Setter Property="ShowInCollapsedMode" Value="{Binding ShowInCollapsedMode}"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsCustomView}" Value="True">
+                                            <Setter Property="Background" Value="#e6f2fa" />
+                                            <Setter Property="BorderBrush" Value="#0072c6"/>
+                                            <Setter Property="BorderThickness" Value="1"/>
+                                            <Setter Property="Foreground" Value="Orange"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </dxa:AccordionControl.ItemContainerStyle>-->
+                        </dxa:AccordionControl>
+                    </StackPanel>
+                </ControlTemplate>
+            </local:SearchControlBase.PopupContentTemplate>
+        </local:SearchControlBase>
+    </StackPanel>
+</UserControl>
