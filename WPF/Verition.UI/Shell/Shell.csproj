@@ -3,7 +3,7 @@
   <PropertyGroup>
     <ProjectGuid>{B04E1BE0-A056-09CF-27CC-3B8E43CEF675}</ProjectGuid>
     <EnableDefaultItems>False</EnableDefaultItems>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net5.0-windows</TargetFramework>
     <UseWPF>True</UseWPF>
     <UseWindowsForms>True</UseWindowsForms>
     <Configurations>Debug;Release;DebugTest</Configurations>
@@ -233,6 +233,10 @@
   <ItemGroup>
     <Folder Include="Helper\" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Controls\Controls.csproj" />
+  </ItemGroup>
+  
   <PropertyGroup>
     <CopyLocalLockFileAssemblies>false</CopyLocalLockFileAssemblies>
     <RunAnalyzersDuringBuild>false</RunAnalyzersDuringBuild>

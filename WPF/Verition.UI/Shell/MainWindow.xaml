@@ -10,7 +10,9 @@
                  xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
                  xmlns:dxdbi="http://schemas.devexpress.com/winfx/2008/xaml/demobase/internal"
                  xmlns:viewModels="clr-namespace:Shell.ViewModels"
-                 xmlns:local="clr-namespace:Shell" d:DataContext="{d:DesignInstance Type=local:DockingSerializationDialogService}"
+                 xmlns:controls="clr-namespace:Controls.SearchControl.View;assembly=Controls"
+                 xmlns:local="clr-namespace:Shell" 
+                
                  mc:Ignorable="d"
                  Title="SampeUI"
                  TitleAlignment="Center"
@@ -27,13 +29,13 @@
         <dx:HeaderItemControl dxb:BarManager.MenuShowMouseButton="LeftButton" >
 
             <StackPanel Orientation="Horizontal">
-                <local:SearchControl >
+                <!--<controls:SearchControl >
                     <dxmvvm:Interaction.Behaviors>
                         <dxmvvm:EventToCommand EventName="ItemDoubleClicked" Command="{Binding DataContext.OpenViewCommand, RelativeSource={RelativeSource AncestorType=Window}}" PassEventArgsToCommand="True">
-                            
+
                         </dxmvvm:EventToCommand>
                     </dxmvvm:Interaction.Behaviors>
-                </local:SearchControl>
+                </controls:SearchControl>-->
             </StackPanel>
         </dx:HeaderItemControl>
     </dx:ThemedWindow.HeaderItems>

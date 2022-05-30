@@ -2,17 +2,11 @@
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup />
   <ItemGroup>
-    <Compile Update="SearchControl.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Update="WindowTest.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Page Update="SearchControl.xaml">
-      <SubType>Designer</SubType>
-    </Page>
     <Page Update="WindowTest.xaml">
       <SubType>Designer</SubType>
     </Page>

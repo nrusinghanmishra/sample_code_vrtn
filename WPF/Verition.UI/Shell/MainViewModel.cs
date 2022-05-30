@@ -235,11 +235,11 @@ namespace Shell.ViewModels {
 
         private void OpenView(EventArgs args)
         {
-            if(args is ItemDoubleClickedRoutedEventArg itemDoubleClickedRoutedEventArg)
-            {
-                var node = itemDoubleClickedRoutedEventArg.Data as Shell.ViewModels.Node;
-                OpenItem(node.Header);
-            }
+            //if(args is ItemDoubleClickedRoutedEventArg itemDoubleClickedRoutedEventArg)
+            //{
+            //    var node = itemDoubleClickedRoutedEventArg.Data as Shell.ViewModels.Node;
+            //    OpenItem(node.Header);
+            //}
           
         }
         void OpenItem(string filePath) {
