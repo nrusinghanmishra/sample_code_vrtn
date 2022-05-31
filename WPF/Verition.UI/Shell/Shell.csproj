@@ -183,14 +183,14 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="SearchControl.xaml.cs" />
-    <Compile Include="SearchControlBase.cs" />
+    <Compile Include="SampleModules\GridViewTest.xaml.cs" />
+    <Compile Include="SampleModules\SampleData.cs" />
+    <Compile Include="SampleModules\TestUserControl.xaml.cs" />
     <Compile Include="Services\DockingSerializationDialogService.cs" />
     <Compile Include="SplashScreen\SplashScreenWindow.xaml.cs">
       <DependentUpon>SplashScreenWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\DocumentViewModel.cs" />
-    <Compile Include="ViewModels\SearchControlViewModel.cs" />
     <Compile Include="WindowTest.xaml.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -200,7 +200,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="SearchControl.xaml">
+    <Page Include="SampleModules\GridViewTest.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SampleModules\TestUserControl.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="SplashScreen\SplashScreenWindow.xaml">
@@ -217,6 +222,7 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="App.config" />
+    <Resource Include="Images\General\Favourite.svg" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

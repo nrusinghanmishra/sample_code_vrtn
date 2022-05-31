@@ -79,6 +79,13 @@ namespace Shell.ViewModels
         public override void OpenItemByPath(string path)
         {
             DisplayName = Path.GetFileName(path);
+            if (path == "GridTest")
+                Control = new Modules.GridViewTest();
+            else if(path == "TestData")
+                Control= new Shell.SampleModules.TestUserControl();
+
+
+
             Control = new UserControl();
             IsActive = true;
         }

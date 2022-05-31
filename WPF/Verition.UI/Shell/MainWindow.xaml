@@ -26,16 +26,14 @@
        
     </dx:ThemedWindow.ToolbarItems>
     <dx:ThemedWindow.HeaderItems>
-        <dx:HeaderItemControl dxb:BarManager.MenuShowMouseButton="LeftButton" >
-
+        <dx:HeaderItemControl>
             <StackPanel Orientation="Horizontal">
-                <!--<controls:SearchControl >
+                <controls:SearchControl >
                     <dxmvvm:Interaction.Behaviors>
                         <dxmvvm:EventToCommand EventName="ItemDoubleClicked" Command="{Binding DataContext.OpenViewCommand, RelativeSource={RelativeSource AncestorType=Window}}" PassEventArgsToCommand="True">
-
                         </dxmvvm:EventToCommand>
                     </dxmvvm:Interaction.Behaviors>
-                </controls:SearchControl>-->
+                </controls:SearchControl>
             </StackPanel>
         </dx:HeaderItemControl>
     </dx:ThemedWindow.HeaderItems>
@@ -55,20 +53,16 @@
                 <RowDefinition />
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <dxdo:DockLayoutManager x:Name="DemoDockContainer" FloatingMode="Desktop" ItemsSource="{Binding Workspaces}"
-                                    DockingStyle="Default" FloatingDocumentContainer="DocumentHost">
+            <dxdo:DockLayoutManager x:Name="DockContainer" FloatingMode="Desktop" ItemsSource="{Binding Workspaces}"
+                                    DockingStyle="Default" >
                 <dxmvvm:Interaction.Behaviors>
                     <local:DockingSerializationDialogService/>
                 </dxmvvm:Interaction.Behaviors>
                 <dxdo:LayoutGroup Name="Root">
-                    <dxdo:LayoutGroup Orientation="Vertical" ItemWidth="3*">
-                        <dxdo:LayoutGroup ItemHeight="3*">
-                            <dxdo:LayoutGroup ItemWidth="3*" DestroyOnClosingChildren="False">
-                                <dxdo:LayoutGroup >
-                                    <dxdo:DocumentGroup Name="DocumentHost" DestroyOnClosingChildren="False"
+                    <dxdo:LayoutGroup ItemWidth="3*" DestroyOnClosingChildren="False">
+                        <dxdo:LayoutGroup >
+                            <dxdo:DocumentGroup Name="DocumentHost" DestroyOnClosingChildren="False"
                                                         ClosePageButtonShowMode="InActiveTabPageHeader" />
-                                </dxdo:LayoutGroup>
-                            </dxdo:LayoutGroup>
                         </dxdo:LayoutGroup>
                     </dxdo:LayoutGroup>
                 </dxdo:LayoutGroup>

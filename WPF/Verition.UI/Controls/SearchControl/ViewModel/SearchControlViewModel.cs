@@ -9,48 +9,55 @@ namespace Controls.SearchControl.ViewModel
 {
     public class SearchControlViewModel
     {
-
-        Random random;
-        public SearchControlViewModel()
+       public SearchControlViewModel()
         {
-            random = new Random();
             Items = CreateTestItems();
-            SelectedItem = Items[0].MenuItems[0];
+            FavItems = CreateTestFavItems();
+            //SelectedItem = Items[0].MenuItems[0];
         }
         public List<MenuItem> Items { get; set; }
-        public virtual MenuItem SelectedItem { get; set; }
+        public List<MenuItem> FavItems { get; set; }
+
+
+        private MenuItem selectedItem;
+
+        public MenuItem SelectedItem
+        {
+            get { return selectedItem; }
+            set { selectedItem = value; }
+        }
+
+        //public virtual MenuItem SelectedItem { get; set; }
 
         public List<MenuItem> CreateTestItems()
         {
             var result = new List<MenuItem>();
-            result.Add(MenuItem.Create("Views", showInCollapsedMode: true, menuItems: new List<MenuItem>() {
-                MenuItem.Create("View 1"),
-                MenuItem.Create("View 2"),
-                MenuItem.Create("View 3")
+            result.Add(MenuItem.Create("Views", MenuItemType.ViewHeader,  showInCollapsedMode: true, menuItems: new List<MenuItem>() {
+                MenuItem.Create("View", MenuItemType.SubItem),
+                MenuItem.Create("View 1", MenuItemType.SubItem),
+                MenuItem.Create("View 2", MenuItemType.SubItem),
+                MenuItem.Create("View 3", MenuItemType.SubItem),
+                MenuItem.Create("GridTest", MenuItemType.SubItem),
+                MenuItem.Create("TestData", MenuItemType.SubItem)
             }));
-            result.Add(MenuItem.Create("History", isCustomView: true, menuItems: new List<MenuItem>() {
-                MenuItem.Create("View")
+            result.Add(MenuItem.Create("History",MenuItemType.MRUHeader, isCustomView: true, menuItems: new List<MenuItem>() {
+                MenuItem.Create("View", MenuItemType.SubItem)
             }));
-            result.Add(MenuItem.Create("Favourites", menuItems: new List<MenuItem>() {
-                MenuItem.Create("View 1"),
-                MenuItem.Create("View 2", showInCollapsedMode:true, isCustomView: true)
+            
+            return result;
+        }
+
+        public List<MenuItem> CreateTestFavItems()
+        {
+            var result = new List<MenuItem>();
+            result.Add(MenuItem.Create("Favourites", MenuItemType.FAVHeader, showInCollapsedMode: true, menuItems: new List<MenuItem>() {
+                MenuItem.Create("View 1", MenuItemType.SubItem),
+                MenuItem.Create("View 2", MenuItemType.SubItem)
             }));
             return result;
         }
-        public virtual void UpdateCustomItems()
-        {
-            foreach (var flattenItem in Flatten(Items))
-                flattenItem.IsCustomView = random.Next(0, 100) < 30;
-        }
-        IEnumerable<MenuItem> Flatten(IEnumerable<MenuItem> e)
-        {
-            return e == null ? Enumerable.Empty<MenuItem>() : e.SelectMany(c => Flatten(c.MenuItems)).Concat(e);
-        }
-
-
+       
 
     }
-
-
  
 }

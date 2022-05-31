@@ -10,8 +10,10 @@
         xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
          xmlns:viewModels="clr-namespace:Shell.ViewModels"
         DataContext="{dxmvvm:ViewModelSource Type=viewModels:MainViewModel}"
+        xmlns:dxa="http://schemas.devexpress.com/winfx/2008/xaml/accordion"
         >
-    <Grid>
+    <StackPanel>
       <controls:SearchControl/>
-    </Grid>
+        
+    </StackPanel>
 </Window>

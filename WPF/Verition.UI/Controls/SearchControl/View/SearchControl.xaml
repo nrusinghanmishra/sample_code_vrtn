@@ -35,15 +35,51 @@
         <helper:SearchControlItemTemplateSelector x:Key="SearchControlItemTemplateSelector">
             <helper:SearchControlItemTemplateSelector.RootTemplate>
                 <DataTemplate DataType="{x:Type model:MenuItem}">
-                    <TextBlock Text="{Binding Header}"/>
+                    <Grid   >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <dx:DXImage HorizontalAlignment="Left" Grid.Column="0" Source="/Shell;component/Images/General/CheckBox.svg"  Height="20" Width="20"/>
+                        <TextBlock Text="{Binding Header}" Grid.Column="1"/>
+                        <dx:DXImage   Grid.Column="2" Source="/Shell;component/Images/General/CheckBox.svg"  Height="20" Width="20"/>
+                    </Grid>
                 </DataTemplate>
             </helper:SearchControlItemTemplateSelector.RootTemplate>
+            <helper:SearchControlItemTemplateSelector.ViewsRootTemplate>
+                <DataTemplate DataType="{x:Type model:MenuItem}">
+                    <Border/>
+                </DataTemplate>
+            </helper:SearchControlItemTemplateSelector.ViewsRootTemplate>
+            <helper:SearchControlItemTemplateSelector.MRURootTemplate>
+                <DataTemplate DataType="{x:Type model:MenuItem}">
+                    <Border  BorderThickness="2" HorizontalAlignment="Stretch" BorderBrush="Gray"/>
+                </DataTemplate>
+            </helper:SearchControlItemTemplateSelector.MRURootTemplate>
+            <helper:SearchControlItemTemplateSelector.FAVSRootTemplate>
+                <DataTemplate DataType="{x:Type model:MenuItem}">
+                    <Border/>
+                </DataTemplate>
+            </helper:SearchControlItemTemplateSelector.FAVSRootTemplate>
             <helper:SearchControlItemTemplateSelector.SubTemplate>
                 <DataTemplate DataType="{x:Type model:MenuItem}">
-                    <StackPanel>
-                        <dxe:TrackBarEdit/>
-                        <TextBlock Text="{Binding Header}"/>
-                    </StackPanel>
+                    <Grid   >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <dx:DXImage HorizontalAlignment="Left" Grid.Column="0" Source="/Shell;component/Images/General/Panel.svg"  Height="20" Width="20"/>
+                        <TextBlock Text="{Binding Header}" Grid.Column="1"/>
+                        <dx:DXImage   Grid.Column="2" Source="/Shell;component/Images/General/Favourite.svg"  Height="20" Width="20"/>
+                    </Grid>
                 </DataTemplate>
             </helper:SearchControlItemTemplateSelector.SubTemplate>
         </helper:SearchControlItemTemplateSelector>
@@ -112,10 +148,12 @@
     <StackPanel>
         <view:SearchControlBase x:Name="ViewSearchPanel"
                                  Width="200" 
+                                 PopupMinHeight="300"
                                  IsTextEditable="True"
                                  NullText="Search Here"
                                  EditValueChanged="SearchControlBase_EditValueChanged"
-                                 EditValuePostDelay="500"                                
+                                 EditValuePostDelay="500"  
+                                 ShowEditorButtons="false"
                                 
             
                                  >
@@ -137,19 +175,34 @@
                 <ControlTemplate>
                     <StackPanel Orientation="Horizontal">
                         <dxa:AccordionControl x:Name="PART_SearchContent"
-                                              Width="400"                                              
-                                              ItemsSource="{Binding Items}" 
-                                              SelectedItem="{Binding SelectedItem}"
-                                              ChildrenPath="Nodes" DisplayMemberPath="Header"
+                                              Width="400"           
+                                              
+                                              ChildrenPath="MenuItems" 
                                               IsCollapseButtonVisible="False"                                              
                                               AutoExpandAllItems="True"
                                               ExpandItemOnHeaderClick="False"
-                                              CollapsedItemClickAction="Select" Margin="0,0,10,0"
+                                              CollapsedItemClickAction="Select" 
+                                              Margin="0,0,1,0"
                                               ShowSearchControl="False"
                                               ViewMode="NavigationPane" 
-                                              SummaryItemHeader="Text"
-                                              ItemTemplateSelector ="{StaticResource SearchControlItemTemplateSelector}"  
+                                              RootItemExpandButtonPosition="None"
+                                              SubItemExpandButtonPosition="None"
+                                              
+                                                
                          >
+                            <dxa:AccordionItem Header="View" 
+                                               IsSelected="true"   
+                                               IsExpanded="true"
+                                               ItemsSource="{Binding Items}" 
+                                               GlyphSize="20,20" 
+                                               Glyph="/Shell;component/Images/General/Panel.svg"
+                                                ItemTemplateSelector ="{StaticResource SearchControlItemTemplateSelector}"/>
+                            <dxa:AccordionItem Header="Favs"
+                                               GlyphSize="20,20" 
+                                               Glyph="/Shell;component/Images/General/Favourite.svg"
+                                               ItemsSource="{Binding FavItems}" 
+                                               ItemTemplateSelector ="{StaticResource SearchControlItemTemplateSelector}"
+                                               />
                             <!--<dxa:AccordionControl.HeaderStyle>
                                 <Style TargetType="dxa:HeaderPresenter" >
                                     <Setter Property="Background" Value="#e6f2fa"/>

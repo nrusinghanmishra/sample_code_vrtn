@@ -27,6 +27,7 @@ using DevExpress.Xpf.DemoBase.Helpers.TextColorizer;
 using DevExpress.Xpf.Docking;
 using DevExpress.Xpf.PropertyGrid;
 using Microsoft.Win32;
+using Controls.SearchControl.View;
 
 namespace Shell.ViewModels {
     
@@ -48,9 +49,9 @@ namespace Shell.ViewModels {
         public SolutionExplorerViewModel SolutionExplorerViewModel {
             get {
                 if(solutionExplorerViewModel == null) {
-                    solutionExplorerViewModel = CreatePanelWorkspaceViewModel<SolutionExplorerViewModel>();
-                    solutionExplorerViewModel.ItemOpening += SolutionExplorerViewModel_ItemOpening;
-                    solutionExplorerViewModel.Solution = Solution.Create();
+                    //solutionExplorerViewModel = CreatePanelWorkspaceViewModel<SolutionExplorerViewModel>();
+                    //solutionExplorerViewModel.ItemOpening += SolutionExplorerViewModel_ItemOpening;
+                    //solutionExplorerViewModel.Solution = Solution.Create();
                     //OpenItem(solutionExplorerViewModel.Solution.LastOpenedItem.FilePath);
                 }
                 return solutionExplorerViewModel;
@@ -235,12 +236,13 @@ namespace Shell.ViewModels {
 
         private void OpenView(EventArgs args)
         {
-            //if(args is ItemDoubleClickedRoutedEventArg itemDoubleClickedRoutedEventArg)
-            //{
-            //    var node = itemDoubleClickedRoutedEventArg.Data as Shell.ViewModels.Node;
-            //    OpenItem(node.Header);
-            //}
-          
+
+            if (args is ItemDoubleClickedRoutedEventArg itemDoubleClickedRoutedEventArg)
+            {
+                Controls.SearchControl.Model.MenuItem node = itemDoubleClickedRoutedEventArg.Data as Controls.SearchControl.Model.MenuItem;
+                OpenItem(node.Header);
+            }
+
         }
         void OpenItem(string filePath) {
             if(ActivateDocument(filePath)) return;

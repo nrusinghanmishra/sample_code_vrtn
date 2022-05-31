@@ -100,7 +100,7 @@
     </DataTemplate>
     
     <DataTemplate DataType="{x:Type viewModels:DocumentViewModel}">
-        <ContentPresenter Content="{Binding Control}"   />
+        <ContentControl Content="{Binding Control}"   />
     </DataTemplate>
     <!--#endregion-->
 
