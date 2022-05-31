@@ -11,30 +11,55 @@
                  xmlns:dxdbi="http://schemas.devexpress.com/winfx/2008/xaml/demobase/internal"
                  xmlns:viewModels="clr-namespace:Shell.ViewModels"
                  xmlns:controls="clr-namespace:Controls.SearchControl.View;assembly=Controls"
-                 xmlns:local="clr-namespace:Shell" 
-                
+                 xmlns:local="clr-namespace:Shell"
                  mc:Ignorable="d"
-                 Title="SampeUI"
+                 Title=""
                  TitleAlignment="Center"
                  Icon="/Shell;component/Images/AppIcon.ico"
                  UseLayoutRounding="True"
                  Padding="0"
                  Height="650"
                  Width="1000"
+                 x:Name="MainWindowTest"
                  DataContext="{dxmvvm:ViewModelSource Type=viewModels:MainViewModel}">
-    <dx:ThemedWindow.ToolbarItems >
-       
+    <dx:ThemedWindow.ToolbarItems   >
+
+        <StackPanel Width="{Binding  ActualWidth, ElementName=MainWindowTest}" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <controls:SearchControl DockPanel.Dock="Right"   >
+                <dxmvvm:Interaction.Behaviors>
+                    <dxmvvm:EventToCommand EventName="ItemDoubleClicked" Command="{Binding DataContext.OpenViewCommand, RelativeSource={RelativeSource AncestorType=Window}}" PassEventArgsToCommand="True">
+                    </dxmvvm:EventToCommand>
+                </dxmvvm:Interaction.Behaviors>
+            </controls:SearchControl>
+        </StackPanel>
+        
+
+        <!--<dxe:SearchControl NullText="Quick Launch" ShowMRUButton="False" ShowFindButton="True" Height="22" Margin="4,0,6,0" Width="200"/>-->
     </dx:ThemedWindow.ToolbarItems>
+    
     <dx:ThemedWindow.HeaderItems>
-        <dx:HeaderItemControl>
-            <StackPanel Orientation="Horizontal">
-                <controls:SearchControl >
-                    <dxmvvm:Interaction.Behaviors>
-                        <dxmvvm:EventToCommand EventName="ItemDoubleClicked" Command="{Binding DataContext.OpenViewCommand, RelativeSource={RelativeSource AncestorType=Window}}" PassEventArgsToCommand="True">
-                        </dxmvvm:EventToCommand>
-                    </dxmvvm:Interaction.Behaviors>
-                </controls:SearchControl>
-            </StackPanel>
+        <dx:HeaderItemControl   dxb:BarManager.MenuShowMouseButton="LeftButton"  HorizontalAlignment="Center" >
+            <dxb:BarManager.DXContextMenu>
+                <dxb:PopupControlContainer>
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="14">
+                            <Border DockPanel.Dock="Left" Background="Green">
+                                <TextBlock Text="UN" Margin="14" Foreground="White"/>
+                            </Border>
+                            <StackPanel Margin="14,0,6,0">
+                                <TextBlock Text="User Name" FontSize="14"/>
+                                <TextBlock Text="username@devexpress.com"/>
+                            </StackPanel>
+                        </StackPanel>
+                        <Button HorizontalContentAlignment="Center">Account Settings...</Button>
+                    </StackPanel>
+                </dxb:PopupControlContainer>
+            </dxb:BarManager.DXContextMenu>
+            <Border Margin="2" DockPanel.Dock="Left" Background="Green">
+                <TextBlock Text="UN" Margin="1" Foreground="White"/>
+            </Border>
+
+
         </dx:HeaderItemControl>
     </dx:ThemedWindow.HeaderItems>
     <Window.Resources>
@@ -53,21 +78,31 @@
                 <RowDefinition />
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <dxdo:DockLayoutManager x:Name="DockContainer" FloatingMode="Desktop" ItemsSource="{Binding Workspaces}"
-                                    DockingStyle="Default" >
+            <dxdo:DockLayoutManager x:Name="DemoDockContainer" FloatingMode="Desktop" ItemsSource="{Binding Workspaces}"
+                                    DockingStyle="VS2010" FloatingDocumentContainer="DocumentHost">
                 <dxmvvm:Interaction.Behaviors>
                     <local:DockingSerializationDialogService/>
                 </dxmvvm:Interaction.Behaviors>
                 <dxdo:LayoutGroup Name="Root">
-                    <dxdo:LayoutGroup ItemWidth="3*" DestroyOnClosingChildren="False">
-                        <dxdo:LayoutGroup >
-                            <dxdo:DocumentGroup Name="DocumentHost" DestroyOnClosingChildren="False"
+                    <dxdo:LayoutGroup Orientation="Vertical" ItemWidth="3*">
+                        <dxdo:LayoutGroup ItemHeight="3*">
+                            <!--<dxdo:LayoutGroup Name="Toolbox" DestroyOnClosingChildren="False" ItemWidth="190"/>-->
+                            <dxdo:LayoutGroup ItemWidth="3*" DestroyOnClosingChildren="False">
+                                <dxdo:LayoutGroup >
+                                    <dxdo:DocumentGroup Name="DocumentHost" DestroyOnClosingChildren="False"
                                                         ClosePageButtonShowMode="InActiveTabPageHeader" />
+                                </dxdo:LayoutGroup>
+                            </dxdo:LayoutGroup>
                         </dxdo:LayoutGroup>
+                        <!--<dxdo:TabbedGroup Name="BottomHost" DestroyOnClosingChildren="False" />-->
                     </dxdo:LayoutGroup>
+                    <!--<dxdo:LayoutGroup Name="RightHost" DestroyOnClosingChildren="False" Orientation="Vertical" ItemWidth="290"/>-->
                 </dxdo:LayoutGroup>
             </dxdo:DockLayoutManager>
-            
+            <dxb:StatusBarControl HideWhenEmpty="False" Caption="StatusBar" AllowCustomizationMenu="False" Grid.Row="1">
+                <dxb:BarStaticItem Content="Ready"/>
+            </dxb:StatusBarControl>
         </Grid>
     </dxb:BarManager>
 </dx:ThemedWindow>
+

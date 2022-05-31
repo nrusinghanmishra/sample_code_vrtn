@@ -34,13 +34,13 @@ using System.Windows.Controls;
 
 namespace Shell.ViewModels
 {
-    public class DocumentViewModel : PanelWorkspaceViewModel
+    public class DocumentViewModel123 : PanelWorkspaceViewModel
     {
-        public DocumentViewModel()
+        public DocumentViewModel123()
         {
             IsClosed = false;
         }
-        public DocumentViewModel(string displayName, string text) : this()
+        public DocumentViewModel123(string displayName, string text) : this()
         {
             DisplayName = displayName;
             CodeLanguageText = new CodeLanguageText(CodeLanguage.CS, text);

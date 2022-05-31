@@ -147,7 +147,7 @@
     </UserControl.Resources>
     <StackPanel>
         <view:SearchControlBase x:Name="ViewSearchPanel"
-                                 Width="200" 
+                                 Width="400" 
                                  PopupMinHeight="300"
                                  IsTextEditable="True"
                                  NullText="Search Here"
