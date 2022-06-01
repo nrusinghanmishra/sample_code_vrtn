@@ -18,8 +18,9 @@
                  Icon="/Shell;component/Images/AppIcon.ico"
                  UseLayoutRounding="True"
                  Padding="0"
-                 Height="650"
-                 Width="1000"
+                 d:DesignHeight="650" d:DesignWidth="1000"
+                 WindowState="Maximized"
+                 
                  x:Name="MainWindowTest"
                  DataContext="{dxmvvm:ViewModelSource Type=viewModels:MainViewModel}">
     <dx:ThemedWindow.ToolbarItems   >
@@ -32,36 +33,9 @@
                 </dxmvvm:Interaction.Behaviors>
             </controls:SearchControl>
         </StackPanel>
-        
-
-        <!--<dxe:SearchControl NullText="Quick Launch" ShowMRUButton="False" ShowFindButton="True" Height="22" Margin="4,0,6,0" Width="200"/>-->
     </dx:ThemedWindow.ToolbarItems>
     
-    <dx:ThemedWindow.HeaderItems>
-        <dx:HeaderItemControl   dxb:BarManager.MenuShowMouseButton="LeftButton"  HorizontalAlignment="Center" >
-            <dxb:BarManager.DXContextMenu>
-                <dxb:PopupControlContainer>
-                    <StackPanel>
-                        <StackPanel Orientation="Horizontal" Margin="14">
-                            <Border DockPanel.Dock="Left" Background="Green">
-                                <TextBlock Text="UN" Margin="14" Foreground="White"/>
-                            </Border>
-                            <StackPanel Margin="14,0,6,0">
-                                <TextBlock Text="User Name" FontSize="14"/>
-                                <TextBlock Text="username@devexpress.com"/>
-                            </StackPanel>
-                        </StackPanel>
-                        <Button HorizontalContentAlignment="Center">Account Settings...</Button>
-                    </StackPanel>
-                </dxb:PopupControlContainer>
-            </dxb:BarManager.DXContextMenu>
-            <Border Margin="2" DockPanel.Dock="Left" Background="Green">
-                <TextBlock Text="UN" Margin="1" Foreground="White"/>
-            </Border>
-
-
-        </dx:HeaderItemControl>
-    </dx:ThemedWindow.HeaderItems>
+    
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>

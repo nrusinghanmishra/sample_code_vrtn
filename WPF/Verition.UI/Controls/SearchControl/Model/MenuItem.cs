@@ -39,6 +39,8 @@ namespace Controls.SearchControl.Model
     {
         ViewHeader = 0,
         FAVHeader,
+        RootViewHeader,
+        RootFavHeader,
         MRUHeader,
         SubItem
     }

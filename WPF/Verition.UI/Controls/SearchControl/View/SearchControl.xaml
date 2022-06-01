@@ -50,21 +50,21 @@
                     </Grid>
                 </DataTemplate>
             </helper:SearchControlItemTemplateSelector.RootTemplate>
-            <helper:SearchControlItemTemplateSelector.ViewsRootTemplate>
+            <helper:SearchControlItemTemplateSelector.ViewsHeaderTemplate>
                 <DataTemplate DataType="{x:Type model:MenuItem}">
                     <Border/>
                 </DataTemplate>
-            </helper:SearchControlItemTemplateSelector.ViewsRootTemplate>
-            <helper:SearchControlItemTemplateSelector.MRURootTemplate>
+            </helper:SearchControlItemTemplateSelector.ViewsHeaderTemplate>
+            <helper:SearchControlItemTemplateSelector.MRUHeaderTemplate>
                 <DataTemplate DataType="{x:Type model:MenuItem}">
                     <Border  BorderThickness="2" HorizontalAlignment="Stretch" BorderBrush="Gray"/>
                 </DataTemplate>
-            </helper:SearchControlItemTemplateSelector.MRURootTemplate>
-            <helper:SearchControlItemTemplateSelector.FAVSRootTemplate>
+            </helper:SearchControlItemTemplateSelector.MRUHeaderTemplate>
+            <helper:SearchControlItemTemplateSelector.FAVSHeaderTemplate>
                 <DataTemplate DataType="{x:Type model:MenuItem}">
                     <Border/>
                 </DataTemplate>
-            </helper:SearchControlItemTemplateSelector.FAVSRootTemplate>
+            </helper:SearchControlItemTemplateSelector.FAVSHeaderTemplate>
             <helper:SearchControlItemTemplateSelector.SubTemplate>
                 <DataTemplate DataType="{x:Type model:MenuItem}">
                     <Grid   >
@@ -176,21 +176,36 @@
                     <StackPanel Orientation="Horizontal">
                         <dxa:AccordionControl x:Name="PART_SearchContent"
                                               Width="400"           
-                                              
                                               ChildrenPath="MenuItems" 
                                               IsCollapseButtonVisible="False"                                              
                                               AutoExpandAllItems="True"
                                               ExpandItemOnHeaderClick="False"
-                                              CollapsedItemClickAction="Select" 
-                                              Margin="0,0,1,0"
+                                              CollapsedItemClickAction="Select"
                                               ShowSearchControl="False"
                                               ViewMode="NavigationPane" 
                                               RootItemExpandButtonPosition="None"
                                               SubItemExpandButtonPosition="None"
+                                              ItemsSource="{Binding Items}" 
+                                              SelectedRootItem="{Binding SelectedRootItem}"
+                                              ItemTemplateSelector ="{StaticResource SearchControlItemTemplateSelector}"
                                               
-                                                
+                                              
                          >
-                            <dxa:AccordionItem Header="View" 
+                            <dxa:AccordionControl.ItemContainerStyle>
+                                <Style TargetType="dxa:AccordionItem">
+                                    <Setter Property="GlyphSize" Value="20,20" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding MenuItemType}" Value="RootViewHeader">
+                                            <Setter Property="Glyph" Value="/Shell;component/Images/General/Panel.svg" />
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding MenuItemType}" Value="RootFavHeader">
+                                            <Setter Property="Glyph" Value="/Shell;component/Images/General/Favourite.svg" />
+
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </dxa:AccordionControl.ItemContainerStyle>
+                            <!--<dxa:AccordionItem Header="View" 
                                                IsSelected="true"   
                                                IsExpanded="true"
                                                ItemsSource="{Binding Items}" 
@@ -202,7 +217,7 @@
                                                Glyph="/Shell;component/Images/General/Favourite.svg"
                                                ItemsSource="{Binding FavItems}" 
                                                ItemTemplateSelector ="{StaticResource SearchControlItemTemplateSelector}"
-                                               />
+                                               />-->
                             <!--<dxa:AccordionControl.HeaderStyle>
                                 <Style TargetType="dxa:HeaderPresenter" >
                                     <Setter Property="Background" Value="#e6f2fa"/>

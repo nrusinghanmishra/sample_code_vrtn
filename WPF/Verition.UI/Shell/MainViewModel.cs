@@ -32,116 +32,7 @@ using Controls.SearchControl.View;
 
 namespace Shell.ViewModels
 {
-    public class DocumentViewModel : PanelWorkspaceViewModel
-    {
-        public DocumentViewModel()
-        {
-            IsClosed = false;
-        }
-        public DocumentViewModel(string displayName, string text) : this()
-        {
-            DisplayName = displayName;
-            CodeLanguageText = new CodeLanguageText(CodeLanguage.CS, text);
-        }
-
-        public FrameworkElement Control { get; set; }
-        public CodeLanguage ModelCodeLanguage { get; private set; }
-        public CodeLanguageText CodeLanguageText { get; private set; }
-        public string Description { get; protected set; }
-        public string FilePath { get; protected set; }
-        public string Footer { get; protected set; }
-        protected override string WorkspaceName { get { return "DocumentHost"; } }
-
-        public bool OpenFile()
-        {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "Visual C# Files (*.cs)|*.cs|XAML Files (*.xaml)|*.xaml";
-            openFileDialog.FilterIndex = 1;
-            bool? dialogResult = openFileDialog.ShowDialog();
-            bool dialogResultOK = dialogResult.HasValue && dialogResult.Value;
-            if (dialogResultOK)
-            {
-                DisplayName = openFileDialog.SafeFileName;
-                FilePath = openFileDialog.FileName;
-                SetCodeLanguageProperties(Path.GetExtension(openFileDialog.SafeFileName));
-                Stream fileStream = File.OpenRead(openFileDialog.FileName);
-                using (StreamReader reader = new StreamReader(fileStream))
-                {
-                    CodeLanguageText = new CodeLanguageText(ModelCodeLanguage, reader.ReadToEnd());
-                }
-                fileStream.Close();
-            }
-            return dialogResultOK;
-        }
-        
-       
-        public override void OpenItemByPath(string path)
-        {
-            DisplayName = Path.GetFileName(path);
-            FilePath = path;
-            SetCodeLanguageProperties(Path.GetExtension(path));
-            CodeLanguageText = new CodeLanguageText(ModelCodeLanguage, () => { return GetCodeTextByPath(path); });
-            if (path == "GridTest")
-                Control = new Modules.GridViewTest();
-            else if (path == "TestData")
-                Control = new Shell.SampleModules.TestUserControl();
-            else
-                Control = new Shell.SampleModules.TestUserControl();
-            IsActive = true;
-        }
-        string GenerateClassText(string className)
-        {
-            string text = @"
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace VisualStudioDocking {{
-    class {0} {{
-    }}
-}}";
-            return string.Format(text, className);
-        }
-        CodeLanguage GetCodeLanguage(string fileExtension)
-        {
-            switch (fileExtension)
-            {
-                case ".cs": return CodeLanguage.CS;
-                case ".vb": return CodeLanguage.VB;
-                case ".xaml": return CodeLanguage.XAML;
-                default: return CodeLanguage.Plain;
-            }
-        }
-        string GetCodeTextByPath(string path)
-        {
-            Assembly assembly = typeof(DocumentViewModel).Assembly;
-            using (Stream stream = AssemblyHelper.GetResourceStream(assembly, path, true))
-            {
-                if (stream == null)
-                    return GenerateClassText(Path.GetFileNameWithoutExtension(path));
-                using (StreamReader reader = new StreamReader(stream))
-                    return reader.ReadToEnd();
-            }
-        }
-        string GetDescription(CodeLanguage codeLanguage)
-        {
-            switch (codeLanguage)
-            {
-                case CodeLanguage.CS: return "Visual C# Source file";
-                case CodeLanguage.VB: return "Visual Basic Source file";
-                case CodeLanguage.XAML: return "Windows Markup File";
-                default: return "Other file";
-            }
-        }
-        void SetCodeLanguageProperties(string fileExtension)
-        {
-            ModelCodeLanguage = GetCodeLanguage(fileExtension);
-            Description = GetDescription(ModelCodeLanguage);
-            Footer = DisplayName;
-            Glyph = ModelCodeLanguage.Equals(CodeLanguage.XAML) ? Images.FileXaml : ModelCodeLanguage.Equals(CodeLanguage.CS) ? Images.FileCS : null;
-        }
-    }
+    
     public class MainViewModel
     {
         CommandViewModel errorList;
@@ -151,23 +42,20 @@ namespace VisualStudioDocking {{
         CommandViewModel newProject;
         CommandViewModel openFile;
         CommandViewModel openProject;
-        CommandViewModel output;
-        CommandViewModel properties;
+        
         CommandViewModel save;
         CommandViewModel saveAll;
         CommandViewModel saveLayout;
-        CommandViewModel searchResults;
+        
         //CommandViewModel solutionExplorer;
-        SolutionExplorerViewModel solutionExplorerViewModel;
+        //SolutionExplorerViewModel solutionExplorerViewModel;
         CommandViewModel toolbox;
         ObservableCollection<WorkspaceViewModel> workspaces;
 
         public MainViewModel()
         {
             ErrorListViewModel = CreatePanelWorkspaceViewModel<ErrorListViewModel>();
-            OutputViewModel = CreatePanelWorkspaceViewModel<OutputViewModel>();
-            PropertiesViewModel = CreatePanelWorkspaceViewModel<PropertiesViewModel>();
-            SearchResultsViewModel = CreatePanelWorkspaceViewModel<SearchResultsViewModel>();
+           
             ToolboxViewModel = CreatePanelWorkspaceViewModel<ToolboxViewModel>();
             Bars = new ReadOnlyCollection<BarModel>(CreateBars());
             InitDefaultLayout();
@@ -175,23 +63,7 @@ namespace VisualStudioDocking {{
 
         public ReadOnlyCollection<BarModel> Bars { get; private set; }
         public ErrorListViewModel ErrorListViewModel { get; private set; }
-        public OutputViewModel OutputViewModel { get; private set; }
-        public PropertiesViewModel PropertiesViewModel { get; private set; }
-        public SearchResultsViewModel SearchResultsViewModel { get; set; }
-        public SolutionExplorerViewModel SolutionExplorerViewModel
-        {
-            get
-            {
-                if (solutionExplorerViewModel == null)
-                {
-                    solutionExplorerViewModel = CreatePanelWorkspaceViewModel<SolutionExplorerViewModel>();
-                    solutionExplorerViewModel.ItemOpening += SolutionExplorerViewModel_ItemOpening;
-                    solutionExplorerViewModel.Solution = Solution.Create();
-                    OpenItem(solutionExplorerViewModel.Solution.LastOpenedItem.FilePath);
-                }
-                return solutionExplorerViewModel;
-            }
-        }
+       
         public ToolboxViewModel ToolboxViewModel { get; private set; }
         public ObservableCollection<WorkspaceViewModel> Workspaces
         {
@@ -230,13 +102,7 @@ namespace VisualStudioDocking {{
             }
 
         }
-        //void OpenItem(string filePath)
-        //{
-        //    if (ActivateDocument(filePath)) return;
-        //    lastOpenedItem = CreateDocumentViewModel();
-        //    lastOpenedItem.OpenItemByPath(filePath);
-        //    OpenOrCloseWorkspace(lastOpenedItem);
-        //}
+        
         protected virtual IDockingSerializationDialogService SaveLoadLayoutService { get { return null; } }
 
         protected virtual List<CommandViewModel> CreateAboutCommands()
@@ -273,17 +139,14 @@ namespace VisualStudioDocking {{
         {
             toolbox = GetShowCommand(ToolboxViewModel);
             //solutionExplorer = GetShowCommand(SolutionExplorerViewModel);
-            properties = GetShowCommand(PropertiesViewModel);
+            //properties = GetShowCommand(PropertiesViewModel);
             errorList = GetShowCommand(ErrorListViewModel);
-            output = GetShowCommand(OutputViewModel);
-            searchResults = GetShowCommand(SearchResultsViewModel);
+            //output = GetShowCommand(OutputViewModel);
+            //searchResults = GetShowCommand(SearchResultsViewModel);
             return new List<CommandViewModel>() {
-                toolbox,
-                //solutionExplorer,
-                properties,
+                toolbox,                
                 errorList,
-                output,
-                searchResults,
+                
             };
         }
         List<CommandViewModel> CreateThemesCommands()
@@ -427,7 +290,7 @@ namespace VisualStudioDocking {{
             return new List<CommandViewModel>() {
                 newProject, newFile, openFile, save, saveAll, GetSeparator(), combo, start,
                 GetSeparator(), cut, copy, paste, GetSeparator(), undo, redo, GetSeparator(),
-                toolbox,  properties, errorList, output, searchResults,
+                toolbox,   errorList,
                 GetSeparator(), loadLayout, saveLayout
             };
         }
@@ -445,7 +308,7 @@ namespace VisualStudioDocking {{
         }
         void InitDefaultLayout()
         {
-            var panels = new List<PanelWorkspaceViewModel> { ToolboxViewModel, PropertiesViewModel, ErrorListViewModel };
+            var panels = new List<PanelWorkspaceViewModel> { ToolboxViewModel,  ErrorListViewModel };
             foreach (var panel in panels)
             {
                 OpenOrCloseWorkspace(panel, false);
@@ -453,13 +316,7 @@ namespace VisualStudioDocking {{
         }
         void OnFileOpenExecuted(object param)
         {
-            var document = CreateDocumentViewModel();
-            if (!document.OpenFile() || ActivateDocument(document.FilePath))
-            {
-                document.Dispose();
-                return;
-            }
-            OpenOrCloseWorkspace(document);
+            
         }
         void OnLoadLayout()
         {
@@ -467,8 +324,7 @@ namespace VisualStudioDocking {{
         }
         void OnNewFileExecuted(object param)
         {
-            string newItemName = solutionExplorerViewModel.Solution.AddNewItemToRoot();
-            OpenItem(newItemName);
+            
         }
         void OnSaveLayout()
         {
@@ -511,10 +367,7 @@ namespace VisualStudioDocking {{
         {
             About.ShowAbout(ProductKind.DXperienceWPF);
         }
-        void SolutionExplorerViewModel_ItemOpening(object sender, SolutionItemOpeningEventArgs e)
-        {
-            OpenItem(e.SolutionItem.FilePath);
-        }
+        
     }
     abstract public class PanelWorkspaceViewModel : WorkspaceViewModel, IMVVMDockingProperties
     {
@@ -600,203 +453,7 @@ namespace VisualStudioDocking {{
         protected override string WorkspaceName { get { return "BottomHost"; } }
     }
 
-    public class OutputViewModel : PanelWorkspaceViewModel
-    {
-        public OutputViewModel()
-        {
-            DisplayName = "Output";
-            Glyph = Images.Output;
-            Text = @"1>------ Build started: Project: VisualStudioInspiredUIDemo, Configuration: Debug Any CPU ------
-1>  DockingDemo -> C:\VisualStudioInspiredUIDemo.exe
-========== Build: 1 succeeded, 0 failed, 0 up-to-date, 0 skipped ==========";
-        }
-
-        public string Text { get; private set; }
-        protected override string WorkspaceName { get { return "BottomHost"; } }
-    }
-
-    public class PropertiesViewModel : PanelWorkspaceViewModel
-    {
-        public PropertiesViewModel()
-        {
-            DisplayName = "Properties";
-            Glyph = Images.PropertiesWindow;
-            SelectedItem = new PropertyItem(new PropertyGridControl());
-            Items = new List<PropertyItem> {
-                SelectedItem,
-                new PropertyItem(new AccordionControl()),
-                new PropertyItem(new DocumentPanel()),
-                new PropertyItem(new DocumentGroup()),
-                new PropertyItem(new DevExpress.Xpf.Docking.LayoutPanel())
-            };
-        }
-
-        public List<PropertyItem> Items { get; set; }
-        public virtual PropertyItem SelectedItem { get; set; }
-        protected override string WorkspaceName { get { return "RightHost"; } }
-    }
-
-    public class PropertyItem
-    {
-        public PropertyItem(object data)
-        {
-            Data = data;
-            Name = Data.ToString();
-        }
-
-        public object Data { get; set; }
-        public string Name { get; set; }
-    }
-
-    public class SearchResultsViewModel : PanelWorkspaceViewModel
-    {
-        public SearchResultsViewModel()
-        {
-            DisplayName = "Search Results";
-            Glyph = Images.FindInFilesWindow;
-            Text = @"Matching lines: 0    Matching files: 0    Total files searched: 61";
-        }
-
-        public string Text { get; private set; }
-        protected override string WorkspaceName { get { return "BottomHost"; } }
-    }
-
-    public class Solution : BindableBase
-    {
-        string[] codePaths = new string[] {
-            "MainWindow.xaml",
-            "MainWindow.xaml.cs",
-            "Resources.xaml",
-            "BarTemplateSelector.cs",
-            "MainViewModel.cs"
-        };
-        int newItemsCount;
-
-        protected Solution()
-        {
-            SolutionItem root = SolutionItem.Create(this, "WPFApplication", ImagePaths.SolutionExplorer);
-            SolutionItem properties = SolutionItem.Create(this, "Properties", ImagePaths.PropertiesWindow);
-            SolutionItem references = SolutionItem.Create(this, "References", ImagePaths.References);
-            root.Items.Add(properties);
-            root.Items.Add(references);
-            var files = GetCodeFiles();
-            foreach (SolutionItem file in files)
-            {
-                root.Items.Add(file);
-            }
-            LastOpenedItem = files.FirstOrDefault();
-            Items = new ObservableCollection<SolutionItem> { root };
-        }
-
-        public ObservableCollection<SolutionItem> Items { get; private set; }
-        public virtual SolutionItem LastOpenedItem { get; set; }
-
-        public static Solution Create()
-        {
-            return ViewModelSource.Create(() => new Solution());
-        }
-        public string AddNewItemToRoot()
-        {
-            newItemsCount++;
-            string newItemName = string.Format("Class{0}.cs", newItemsCount);
-            var solutionItem = SolutionItem.CreateFile(this, newItemName);
-            (Items[0] as SolutionItem).Items.Add(solutionItem);
-            return newItemName;
-        }
-        List<SolutionItem> GetCodeFiles()
-        {
-            var result = new List<SolutionItem>();
-            var subFiles = new List<SolutionItem>();
-            foreach (var codePath in codePaths)
-                if (codePath.EndsWith(".xaml.cs") || codePath.EndsWith(".xaml.vb"))
-                    subFiles.Add(SolutionItem.CreateFile(this, codePath));
-                else
-                    result.Add(SolutionItem.CreateFile(this, codePath));
-            foreach (var subFile in subFiles)
-            {
-                var xamlFile = result.FirstOrDefault(x => x.FilePath == subFile.FilePath.Replace(".xaml.cs", ".xaml").Replace(".xaml.vb", ".xaml"));
-                if (xamlFile == null)
-                    result.Add(subFile);
-                else
-                    xamlFile.Items.Add(subFile);
-            }
-            return result;
-        }
-    }
-
-    public class SolutionExplorerViewModel : PanelWorkspaceViewModel
-    {
-        public SolutionExplorerViewModel()
-        {
-            DisplayName = "Solution Explorer";
-            Glyph = Images.SolutionExplorer;
-            PropertiesWindow = Images.PropertiesWindow;
-            ShowAllFiles = Images.ShowAllFiles;
-            Refresh = Images.Refresh;
-        }
-
-        public event EventHandler<SolutionItemOpeningEventArgs> ItemOpening;
-
-        public ImageSource PropertiesWindow { get; set; }
-        public ImageSource Refresh { get; set; }
-        public ImageSource ShowAllFiles { get; set; }
-        public Solution Solution { get; set; }
-        protected override string WorkspaceName { get { return "RightHost"; } }
-
-        public void OpenItem(SolutionItem item)
-        {
-            if (item != null && item.IsFile && ItemOpening != null)
-                ItemOpening.Invoke(this, new SolutionItemOpeningEventArgs(item));
-        }
-    }
-
-    public class SolutionItem
-    {
-        readonly Solution solution;
-
-        protected SolutionItem(Solution solution)
-        {
-            this.solution = solution;
-            Items = new ObservableCollection<SolutionItem>();
-        }
-
-        public string DisplayName { get; private set; }
-        public string FilePath { get; private set; }
-        public string GlyphPath { get; private set; }
-        public bool IsFile { get { return FilePath != null; } }
-        public ObservableCollection<SolutionItem> Items { get; private set; }
-
-        public static SolutionItem Create(Solution solution, string displayName, string glyph)
-        {
-            var solutionItem = ViewModelSource.Create(() => new SolutionItem(solution));
-            solutionItem.Do(x => {
-                x.DisplayName = displayName;
-                x.GlyphPath = glyph;
-            });
-            return solutionItem;
-        }
-        public static SolutionItem CreateFile(Solution solution, string path)
-        {
-            var solutionItem = ViewModelSource.Create(() => new SolutionItem(solution));
-            solutionItem.Do(x => {
-                x.DisplayName = Path.GetFileName(path);
-                x.GlyphPath = Path.GetExtension(path) == ".cs" ? ImagePaths.FileCS : ImagePaths.FileXaml;
-                x.FilePath = path;
-            });
-            return solutionItem;
-        }
-    }
-
-    public class SolutionItemOpeningEventArgs : EventArgs
-    {
-        public SolutionItemOpeningEventArgs(SolutionItem solutionItem)
-        {
-            SolutionItem = solutionItem;
-        }
-
-        public SolutionItem SolutionItem { get; set; }
-    }
-
+    
     public class ToolboxViewModel : PanelWorkspaceViewModel
     {
         public ToolboxViewModel()

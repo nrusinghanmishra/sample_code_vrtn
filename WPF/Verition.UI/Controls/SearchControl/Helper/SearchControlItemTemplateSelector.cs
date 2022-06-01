@@ -11,9 +11,11 @@ namespace Controls.SearchControl.Helper
     public class SearchControlItemTemplateSelector : DataTemplateSelector
     {
         public DataTemplate RootTemplate { get; set; }
-        public DataTemplate MRURootTemplate { get; set; }
-        public DataTemplate FAVSRootTemplate { get; set; }
-        public DataTemplate ViewsRootTemplate { get; set; }
+        public DataTemplate MRUHeaderTemplate { get; set; }
+        public DataTemplate FAVSHeaderTemplate { get; set; }
+        public DataTemplate ViewsHeaderTemplate { get; set; }
+        public DataTemplate FAVSRootHeaderTemplate { get; set; }
+        public DataTemplate ViewsRootHeaderTemplate { get; set; }
         public DataTemplate SubTemplate { get; set; }
 
         public override DataTemplate SelectTemplate(object item, DependencyObject container)
@@ -21,11 +23,11 @@ namespace Controls.SearchControl.Helper
             if (item is Model.MenuItem menuItem)
             {
                 if(menuItem.MenuItemType == Model.MenuItemType.MRUHeader)
-                    return MRURootTemplate;
+                    return MRUHeaderTemplate;
                 if (menuItem.MenuItemType == Model.MenuItemType.ViewHeader)
-                    return ViewsRootTemplate;
+                    return ViewsHeaderTemplate;
                 if (menuItem.MenuItemType == Model.MenuItemType.FAVHeader)
-                    return FAVSRootTemplate;
+                    return FAVSHeaderTemplate;
                 return SubTemplate;
             }            
             return base.SelectTemplate(item, container);

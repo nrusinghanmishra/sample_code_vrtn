@@ -38,66 +38,6 @@
 
     <!--#region ViewModels-->
     
-    <DataTemplate DataType="{x:Type viewModels:SolutionExplorerViewModel}">
-        <dx:BackgroundPanel>
-            <dxb:BarManager>
-                <dxb:BarManager.Items>
-                    <dxb:BarButtonItem Name="bProperties" CategoryName="Solution" Glyph="{Binding PropertiesWindow}" Hint="Properties" />
-                    <dxb:BarButtonItem Name="bShowAll" CategoryName="Solution" Glyph="{Binding ShowAllFiles}" Hint="Show All Files" />
-                    <dxb:BarButtonItem Name="bRefresh" CategoryName="Solution" Glyph="{Binding Refresh}" Hint="Refresh" />
-                </dxb:BarManager.Items>
-                <dxb:BarManager.Bars>
-                    <dxb:Bar Caption="Solution" x:Name="Solution" UseWholeRow="True" AllowQuickCustomization="False" ShowDragWidget="False">
-                        <dxb:Bar.DockInfo>
-                            <dxb:BarDockInfo ContainerName="SolutionBar" />
-                        </dxb:Bar.DockInfo>
-                        <dxb:Bar.ItemLinks>
-                            <dxb:BarButtonItemLink BarItemName="bProperties" />
-                            <dxb:BarItemLinkSeparator />
-                            <dxb:BarButtonItemLink BarItemName="bShowAll" />
-                            <dxb:BarButtonItemLink BarItemName="bRefresh" />
-                        </dxb:Bar.ItemLinks>
-                    </dxb:Bar>
-                </dxb:BarManager.Bars>
-                <DockPanel>
-                    <dxb:BarContainerControl x:Name="SolutionBar" DockPanel.Dock="Top" />
-                    <Border>
-                        <Border.Resources>
-                            <HierarchicalDataTemplate x:Key="ChildTemplate" >
-                                <StackPanel Orientation="Horizontal">
-                                    <Image Source="{Binding GlyphPath, Converter={dx:SvgUriToImageSourceConverter SvgWidth=16, SvgHeight=16}}"/>
-                                    <TextBlock Margin="5,0,0,0" VerticalAlignment="Center" Text="{Binding DisplayName}" />
-                                </StackPanel>
-                            </HierarchicalDataTemplate>
-                            <HierarchicalDataTemplate x:Key="template"
-                                                      ItemsSource="{Binding Path=Items}"
-                                                      ItemTemplate="{StaticResource ChildTemplate}">
-                                <StackPanel Orientation="Horizontal">
-                                    <Image Source="{Binding GlyphPath, Converter={dx:SvgUriToImageSourceConverter SvgWidth=16, SvgHeight=16}}"/>
-                                    <TextBlock Margin="5,0,0,0" VerticalAlignment="Center" Text="{Binding DisplayName}" />
-                                </StackPanel>
-                            </HierarchicalDataTemplate>
-                        </Border.Resources>
-                        <TreeView ItemsSource="{Binding Solution.Items}" ItemTemplate="{StaticResource template}" BorderThickness="0" FocusManager.IsFocusScope="True">
-                            <dxmvvm:Interaction.Behaviors>
-                                <dxmvvm:EventToCommand EventName="MouseDoubleClick" Command="{Binding OpenItemCommand}" PassEventArgsToCommand="True">
-                                    <dxmvvm:EventToCommand.EventArgsConverter>
-                                        <dxmvvm:ItemsControlMouseEventArgsConverter/>
-                                    </dxmvvm:EventToCommand.EventArgsConverter>
-                                </dxmvvm:EventToCommand>
-                            </dxmvvm:Interaction.Behaviors>
-                            <TreeView.ItemContainerStyle>
-                                <Style TargetType="{x:Type TreeViewItem}">
-                                    <Setter Property="IsExpanded" Value="True"/>
-                                    <Setter Property="ItemsSource" Value="{Binding Items}"/>
-                                </Style>
-                            </TreeView.ItemContainerStyle>
-                        </TreeView>
-                    </Border>
-                </DockPanel>
-            </dxb:BarManager>
-        </dx:BackgroundPanel>
-    </DataTemplate>
     
     <DataTemplate DataType="{x:Type viewModels:DocumentViewModel}">
         <ContentControl Content="{Binding Control}"   />
