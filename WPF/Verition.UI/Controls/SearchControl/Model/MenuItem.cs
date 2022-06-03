@@ -1,38 +1,72 @@
-﻿using DevExpress.Mvvm.POCO;
+﻿using DevExpress.Mvvm;
+using DevExpress.Mvvm.POCO;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace Controls.SearchControl.Model
 {
-    public class MenuItem
+    public class MenuItem : INotifyPropertyChanged
     {
-        public static MenuItem Create(string header, MenuItemType menuItemType, bool showInCollapsedMode = false, bool isCustomView = false, List<MenuItem> menuItems = null)
+
+        public MenuItem()
         {
-            var factory = ViewModelSource.Factory<string, MenuItemType, bool, bool, List<MenuItem>, MenuItem>((s, itemType, collapseMode, customView, children) 
-                => new MenuItem(s, itemType, collapseMode, customView, children));
-            return factory(header, menuItemType, showInCollapsedMode, isCustomView, menuItems);
+
         }
-        protected MenuItem(string header, MenuItemType menuItemType, bool showInCollapsedMode, bool isCustomView, List<MenuItem> menuItems)
+        public MenuItem(string header, MenuItemType menuItemType, bool showInCollapsedMode,  List<MenuItem> menuItems)
         {
             Header = header;
             ShowInCollapsedMode = showInCollapsedMode;
-            IsCustomView = isCustomView;
             MenuItems = menuItems;
             Index = counter;
             counter++;
             MenuItemType = menuItemType;
         }
         static int counter;
-        public string Header { get; private set; }
-        public bool ShowInCollapsedMode { get; private set; }
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        public string Header { get; set; }
+        public bool ShowInCollapsedMode { get; set; }
         public virtual bool IsCustomView { get; set; }
-        public List<MenuItem> MenuItems { get; private set; }
-        public int Index { get; private set; }
+        public List<MenuItem> MenuItems { get; set; }
+        public int Index { get; set; }
 
         public MenuItemType MenuItemType { get; set; }
+        //public bool IsFavourite { get; set; }
+
+        private bool isFavourite;
+
+        public bool IsFavourite
+        {
+            get { return isFavourite; }
+            set { isFavourite = value;  Notify(nameof(IsFavourite)); }
+        }
+
+
+        private bool isMRU;
+
+        public bool IsMRU
+        {
+            get { return isMRU; }
+            set { 
+                isMRU = value;  
+                Notify(nameof(IsMRU));
+            }
+        }
+        void Notify(string name)
+        {
+            if (PropertyChanged != null) 
+                PropertyChanged(this, new PropertyChangedEventArgs(name));
+        }
+        public override string ToString()
+        {
+            return Header;
+        }
     }
 
     public enum MenuItemType
@@ -42,6 +76,7 @@ namespace Controls.SearchControl.Model
         RootViewHeader,
         RootFavHeader,
         MRUHeader,
-        SubItem
+        SubItem,
+        Seperator
     }
 }

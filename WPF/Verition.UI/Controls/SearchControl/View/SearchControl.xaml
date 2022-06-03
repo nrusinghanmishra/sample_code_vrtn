@@ -4,17 +4,18 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
-            xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+             xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
              xmlns:dxa="http://schemas.devexpress.com/winfx/2008/xaml/accordion"
-              xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
+             xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
              xmlns:local="clr-namespace:Controls.SearchControl"
              xmlns:helper="clr-namespace:Controls.SearchControl.Helper"
              xmlns:model="clr-namespace:Controls.SearchControl.Model"
              xmlns:view="clr-namespace:Controls.SearchControl.View"
-             
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
+
+        <helper:BindingProxy x:Key="Proxy" DataContext="{Binding}"/>
         <!--<DataTemplate x:Key="HeadItemTemplate">
             <dxa:AccordionItem CanSelect="False"
                                IsExpanded="True"
@@ -55,6 +56,11 @@
                     <Border/>
                 </DataTemplate>
             </helper:SearchControlItemTemplateSelector.ViewsHeaderTemplate>
+            <helper:SearchControlItemTemplateSelector.SeperatorTemplate>
+                <DataTemplate DataType="{x:Type model:MenuItem}">
+                    <Border  BorderThickness="2" HorizontalAlignment="Stretch" BorderBrush="Gray"/>
+                </DataTemplate>
+            </helper:SearchControlItemTemplateSelector.SeperatorTemplate>
             <helper:SearchControlItemTemplateSelector.MRUHeaderTemplate>
                 <DataTemplate DataType="{x:Type model:MenuItem}">
                     <Border  BorderThickness="2" HorizontalAlignment="Stretch" BorderBrush="Gray"/>
@@ -78,7 +84,28 @@
                         </Grid.RowDefinitions>
                         <dx:DXImage HorizontalAlignment="Left" Grid.Column="0" Source="/Shell;component/Images/General/Panel.svg"  Height="20" Width="20"/>
                         <TextBlock Text="{Binding Header}" Grid.Column="1"/>
-                        <dx:DXImage   Grid.Column="2" Source="/Shell;component/Images/General/Favourite.svg"  Height="20" Width="20"/>
+                        <ToggleButton Grid.Column="2"   Width="22" Height="22"  
+                                      Command="{Binding  DataContext.FavouriteClickedCommand,  Source={StaticResource Proxy}}" 
+                                      CommandParameter="{Binding}"
+                                      IsChecked="{Binding IsFavourite}"
+                                      >
+                                        
+                            <ToggleButton.Template>
+                                <ControlTemplate TargetType="{x:Type ToggleButton}">
+                                    <Grid Background="Transparent">
+                                        <dx:DXImage  x:Name="FavIcon"  Visibility="Collapsed" Source="/Shell;component/Images/General/Favourite.svg"  Height="20" Width="20"/>
+                                        <dx:DXImage  x:Name="UnFavIcon" Visibility="Visible"   Source="/Shell;component/Images/General/UnFavourite.svg"  Height="20" Width="20"/>
+                                    </Grid>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsChecked" Value="True">
+                                            <Setter Property="Visibility" TargetName="FavIcon" Value="Visible"/>
+                                            <Setter Property="Visibility" TargetName="UnFavIcon" Value="Collapsed"/>
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </ToggleButton.Template>
+                        </ToggleButton>
+                        <!--<dx:DXImage   Grid.Column="2" Source="/Shell;component/Images/General/Favourite.svg"  Height="20" Width="20"/>-->
                     </Grid>
                 </DataTemplate>
             </helper:SearchControlItemTemplateSelector.SubTemplate>
@@ -154,8 +181,7 @@
                                  EditValueChanged="SearchControlBase_EditValueChanged"
                                  EditValuePostDelay="500"  
                                  ShowEditorButtons="false"
-                                
-            
+                                 FocusPopupOnOpen="False"
                                  >
             <!--<view:SearchControlBase.StyleSettings>
                 <view:PopupBaseEditStyleSettingsEx/>
@@ -173,7 +199,93 @@
 
             <view:SearchControlBase.PopupContentTemplate>
                 <ControlTemplate>
-                    <StackPanel Orientation="Horizontal">
+                    <dx:DXTabControl  x:Name="PART_SearchContentTab" MaxHeight="800" MinHeight="400">
+                        <dx:DXTabControl.View>
+                            <dx:TabControlMultiLineView HeaderLocation="Bottom"/>
+                        </dx:DXTabControl.View>
+                        <dx:DXTabItem >
+                            <dx:DXTabItem.Icon>
+                                <dx:DXImage Source="/Shell;component/Images/General/Panel.svg" />
+                            </dx:DXTabItem.Icon>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                
+                                <dxa:AccordionControl               
+                                              Grid.Row="0"
+                                              x:Name="PART_SearchContent"
+                                              Width="400"           
+                                              ChildrenPath="MenuItems" 
+                                              IsCollapseButtonVisible="False"                                              
+                                              AutoExpandAllItems="True"
+                                              ExpandItemOnHeaderClick="False"
+                                              CollapsedItemClickAction="Select"
+                                              ShowSearchControl="False"
+                                              ViewMode="Accordion" 
+                                              RootItemExpandButtonPosition="None"
+                                              SubItemExpandButtonPosition="None"
+                                              ItemsSource="{Binding Items}"                                                                                    
+                                              SelectedItem="{Binding SelectedItem}"
+                                              ItemTemplateSelector ="{StaticResource SearchControlItemTemplateSelector}"
+                                                  >
+                                </dxa:AccordionControl>
+                                
+                                <Border  Height="2" Grid.Row="1" BorderThickness="2" HorizontalAlignment="Stretch" BorderBrush="Gray"/>
+                                <!--<Separator Width="2" Grid.Row="1" BorderBrush="Black"/>-->
+                                <dxa:AccordionControl 
+                                              Grid.Row="2"
+                                              x:Name="PART_SearchContentMRU"
+                                              Width="400"  
+                                              ChildrenPath="MenuItems" 
+                                              IsCollapseButtonVisible="False"                                              
+                                              AutoExpandAllItems="True"
+                                              ExpandItemOnHeaderClick="False"
+                                              CollapsedItemClickAction="Select"
+                                              ShowSearchControl="False"
+                                              ViewMode="Accordion" 
+                                              RootItemExpandButtonPosition="None"
+                                              SubItemExpandButtonPosition="None"
+                                              ItemsSource="{Binding MRUItems}"                                                                                    
+                                              SelectedItem="{Binding SelectedItem}"
+                                              ItemTemplateSelector ="{StaticResource SearchControlItemTemplateSelector}"
+                                              
+                                                  >
+                                </dxa:AccordionControl>
+                            </Grid>
+                            
+                            
+                        </dx:DXTabItem>
+                        <dx:DXTabItem>
+                            <dx:DXTabItem.Icon>
+                                <dx:DXImage Source="/Shell;component/Images/General/Favourite.svg" />
+                            </dx:DXTabItem.Icon>
+                            <dxa:AccordionControl x:Name="PART_SearchContentFavs"
+                                              Width="400"           
+                                              ChildrenPath="MenuItems" 
+                                              IsCollapseButtonVisible="False"                                              
+                                              AutoExpandAllItems="True"
+                                              ExpandItemOnHeaderClick="False"
+                                              CollapsedItemClickAction="Select"
+                                              ShowSearchControl="False"
+                                              ViewMode="Accordion" 
+                                              RootItemExpandButtonPosition="None"
+                                              SubItemExpandButtonPosition="None"
+                                              ItemsSource="{Binding FavItems}"                                               
+                                              
+                                              SelectedItem="{Binding SelectedItem}"
+                                              ItemTemplateSelector ="{StaticResource SearchControlItemTemplateSelector}"
+                                              
+                                                  >
+
+                            </dxa:AccordionControl>
+                        </dx:DXTabItem>
+                    </dx:DXTabControl>
+
+                    
+                    <!--<StackPanel Orientation="Horizontal">
                         <dxa:AccordionControl x:Name="PART_SearchContent"
                                               Width="400"           
                                               ChildrenPath="MenuItems" 
@@ -185,10 +297,10 @@
                                               ViewMode="NavigationPane" 
                                               RootItemExpandButtonPosition="None"
                                               SubItemExpandButtonPosition="None"
-                                              ItemsSource="{Binding Items}" 
+                                              ItemsSource="{Binding Items}"                                               
                                               SelectedRootItem="{Binding SelectedRootItem}"
+                                              SelectedItem="{Binding SelectedItem}"
                                               ItemTemplateSelector ="{StaticResource SearchControlItemTemplateSelector}"
-                                              
                                               
                          >
                             <dxa:AccordionControl.ItemContainerStyle>
@@ -205,7 +317,7 @@
                                     </Style.Triggers>
                                 </Style>
                             </dxa:AccordionControl.ItemContainerStyle>
-                            <!--<dxa:AccordionItem Header="View" 
+                            --><!--<dxa:AccordionItem Header="View" 
                                                IsSelected="true"   
                                                IsExpanded="true"
                                                ItemsSource="{Binding Items}" 
@@ -239,9 +351,9 @@
                                         </DataTrigger>
                                     </Style.Triggers>
                                 </Style>
-                            </dxa:AccordionControl.ItemContainerStyle>-->
+                            </dxa:AccordionControl.ItemContainerStyle>--><!--
                         </dxa:AccordionControl>
-                    </StackPanel>
+                    </StackPanel>-->
                 </ControlTemplate>
             </view:SearchControlBase.PopupContentTemplate>
         </view:SearchControlBase>

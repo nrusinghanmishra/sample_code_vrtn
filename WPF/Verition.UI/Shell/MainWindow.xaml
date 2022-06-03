@@ -19,12 +19,10 @@
                  UseLayoutRounding="True"
                  Padding="0"
                  d:DesignHeight="650" d:DesignWidth="1000"
-                 WindowState="Maximized"
-                 
+                 WindowState="Maximized"                 
                  x:Name="MainWindowTest"
                  DataContext="{dxmvvm:ViewModelSource Type=viewModels:MainViewModel}">
-    <dx:ThemedWindow.ToolbarItems   >
-
+    <dx:ThemedWindow.ToolbarItems>
         <StackPanel Width="{Binding  ActualWidth, ElementName=MainWindowTest}" VerticalAlignment="Center" HorizontalAlignment="Center">
             <controls:SearchControl DockPanel.Dock="Right"   >
                 <dxmvvm:Interaction.Behaviors>
@@ -34,8 +32,6 @@
             </controls:SearchControl>
         </StackPanel>
     </dx:ThemedWindow.ToolbarItems>
-    
-    
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -68,9 +64,7 @@
                                 </dxdo:LayoutGroup>
                             </dxdo:LayoutGroup>
                         </dxdo:LayoutGroup>
-                        <!--<dxdo:TabbedGroup Name="BottomHost" DestroyOnClosingChildren="False" />-->
                     </dxdo:LayoutGroup>
-                    <!--<dxdo:LayoutGroup Name="RightHost" DestroyOnClosingChildren="False" Orientation="Vertical" ItemWidth="290"/>-->
                 </dxdo:LayoutGroup>
             </dxdo:DockLayoutManager>
             <dxb:StatusBarControl HideWhenEmpty="False" Caption="StatusBar" AllowCustomizationMenu="False" Grid.Row="1">

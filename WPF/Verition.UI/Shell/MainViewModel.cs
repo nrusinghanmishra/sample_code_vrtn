@@ -78,7 +78,6 @@ namespace Shell.ViewModels
             }
         }
         private DelegateCommand<EventArgs> openViewCommand;
-
         public ICommand OpenViewCommand
         {
             get
@@ -98,7 +97,8 @@ namespace Shell.ViewModels
             if (args is ItemDoubleClickedRoutedEventArg itemDoubleClickedRoutedEventArg)
             {
                 Controls.SearchControl.Model.MenuItem node = itemDoubleClickedRoutedEventArg.Data as Controls.SearchControl.Model.MenuItem;
-                OpenItem(node.Header);
+                if(node != null)
+                    OpenItem(node.Header);
             }
 
         }

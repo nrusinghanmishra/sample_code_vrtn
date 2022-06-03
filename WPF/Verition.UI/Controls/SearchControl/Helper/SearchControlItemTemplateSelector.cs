@@ -17,6 +17,7 @@ namespace Controls.SearchControl.Helper
         public DataTemplate FAVSRootHeaderTemplate { get; set; }
         public DataTemplate ViewsRootHeaderTemplate { get; set; }
         public DataTemplate SubTemplate { get; set; }
+        public DataTemplate SeperatorTemplate { get; set; }
 
         public override DataTemplate SelectTemplate(object item, DependencyObject container)
         {
@@ -28,6 +29,8 @@ namespace Controls.SearchControl.Helper
                     return ViewsHeaderTemplate;
                 if (menuItem.MenuItemType == Model.MenuItemType.FAVHeader)
                     return FAVSHeaderTemplate;
+                if (menuItem.MenuItemType == Model.MenuItemType.Seperator)
+                    return SeperatorTemplate;
                 return SubTemplate;
             }            
             return base.SelectTemplate(item, container);

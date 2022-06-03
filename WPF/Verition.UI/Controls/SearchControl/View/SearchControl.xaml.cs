@@ -39,6 +39,7 @@ namespace Controls.SearchControl.View
 
         private void ViewSearchPanel_ItemDoubleClicked(object sender, EventArgs e)
         {
+            searchControlViewModel.OnItemDoubleClicked(((ItemDoubleClickedEventArg)e).Data as Controls.SearchControl.Model.MenuItem);
             RaiseEvent(new ItemDoubleClickedRoutedEventArg(ItemDoubleClickedEvent, ((ItemDoubleClickedEventArg)e).Data));
         }
 
