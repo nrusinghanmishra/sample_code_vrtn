@@ -184,6 +184,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Include="SampleModules\GridViewTest.xaml.cs" />
+    <Compile Include="SampleModules\GridViewTest2.xaml.cs" />
     <Compile Include="SampleModules\SampleData.cs" />
     <Compile Include="SampleModules\TestUserControl.xaml.cs" />
     <Compile Include="Services\DockingSerializationDialogService.cs" />
@@ -203,6 +204,9 @@
     <Page Include="SampleModules\GridViewTest.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SampleModules\GridViewTest2.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="SampleModules\TestUserControl.xaml">

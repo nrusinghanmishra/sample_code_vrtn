@@ -62,6 +62,8 @@ namespace Shell.ViewModels
                 Control = new Modules.GridViewTest();
             else if (path == "TestData")
                 Control = new Shell.SampleModules.TestUserControl();
+            else if (path == "PositionGridTest")
+                Control = new Shell.SampleModules.GridViewTest2();
             else
                 Control = new Shell.SampleModules.TestUserControl();
             IsActive = true;

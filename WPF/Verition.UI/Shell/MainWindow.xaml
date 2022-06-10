@@ -49,14 +49,13 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <dxdo:DockLayoutManager x:Name="DemoDockContainer" FloatingMode="Desktop" ItemsSource="{Binding Workspaces}"
-                                    DockingStyle="VS2010" FloatingDocumentContainer="DocumentHost">
+                                    DockingStyle="Default" FloatingDocumentContainer="DocumentHost">
                 <dxmvvm:Interaction.Behaviors>
                     <local:DockingSerializationDialogService/>
                 </dxmvvm:Interaction.Behaviors>
                 <dxdo:LayoutGroup Name="Root">
                     <dxdo:LayoutGroup Orientation="Vertical" ItemWidth="3*">
                         <dxdo:LayoutGroup ItemHeight="3*">
-                            <!--<dxdo:LayoutGroup Name="Toolbox" DestroyOnClosingChildren="False" ItemWidth="190"/>-->
                             <dxdo:LayoutGroup ItemWidth="3*" DestroyOnClosingChildren="False">
                                 <dxdo:LayoutGroup >
                                     <dxdo:DocumentGroup Name="DocumentHost" DestroyOnClosingChildren="False"
