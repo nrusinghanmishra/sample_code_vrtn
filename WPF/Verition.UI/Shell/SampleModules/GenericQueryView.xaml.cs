@@ -1,5 +1,4 @@
-﻿using Modules;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,14 +16,13 @@ using System.Windows.Shapes;
 namespace Shell.SampleModules
 {
     /// <summary>
-    /// Interaction logic for GridViewTest2.xaml
+    /// Interaction logic for GenericQueryView.xaml
     /// </summary>
-    public partial class GridViewTest2 : UserControl
+    public partial class GenericQueryView : UserControl
     {
-        public GridViewTest2()
+        public GenericQueryView()
         {
             InitializeComponent();
-            //grid.ItemsSource = SampleData.GenerateVehicleOrders(10000);
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using Modules;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,17 +13,21 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Shell.SampleModules
+namespace Verition.UI.Reports.View
 {
     /// <summary>
-    /// Interaction logic for GridViewTest2.xaml
+    /// Interaction logic for ReportView.xaml
     /// </summary>
-    public partial class GridViewTest2 : UserControl
+    public partial class ReportView : UserControl
     {
-        public GridViewTest2()
+        public ReportView()
         {
             InitializeComponent();
-            //grid.ItemsSource = SampleData.GenerateVehicleOrders(10000);
+        }
+
+        private void dockLayoutManager_DockItemClosing(object sender, DevExpress.Xpf.Docking.Base.ItemCancelEventArgs e)
+        {
+
         }
     }
 }

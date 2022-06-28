@@ -20,7 +20,8 @@
                         
                          AllowColumnMRUFilterList="False"
                          dx:ScrollBarExtensions.ScrollBarMode="TouchOverlap"
-                         ShowBorder="False">
+                         ShowBorder="False"
+                         ItemsSource ="{Binding ItemSource}">
             <dxg:GridControl.GroupSummary>
                 <dxg:GridSummaryItem SummaryType="Count" />
             </dxg:GridControl.GroupSummary>
