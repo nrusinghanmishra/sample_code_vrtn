@@ -9,7 +9,9 @@ namespace Shell {
            
         }
         public MainWindow() {
+            ApplicationThemeHelper.ApplicationThemeName = Theme.VS2019Dark.Name;
             Theme.CachePaletteThemes = true;
+            DemoRunner.SubscribeThemeChanging();
             Theme.RegisterPredefinedPaletteThemes();
             InitializeComponent();
         }

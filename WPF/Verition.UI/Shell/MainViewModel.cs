@@ -230,11 +230,8 @@ namespace Shell.ViewModels
         List<CommandViewModel> CreateCommands()
         {
             return new List<CommandViewModel> {
-                new CommandViewModel("File", CreateFileCommands()),
-                new CommandViewModel("Edit", CreateEditCommands()),
-                new CommandViewModel("Layouts", CreateLayoutCommands()),
-                new CommandViewModel("View", CreateViewCommands()),
-                new CommandViewModel("Help", CreateAboutCommands()),
+                
+                //new CommandViewModel("Help", CreateAboutCommands()),
                 new CommandViewModel("Themes", CreateThemesCommands())
             };
         }
@@ -354,7 +351,7 @@ namespace Shell.ViewModels
         }
         void OpenItem(string filePath)
         {
-            if (ActivateDocument(filePath)) return;
+            //if (ActivateDocument(filePath)) return;
             lastOpenedItem = CreateDocumentViewModel();
             lastOpenedItem.OpenItemByPath(filePath);
             OpenOrCloseWorkspace(lastOpenedItem);

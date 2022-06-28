@@ -147,9 +147,6 @@
     <Resource Include="Images\DX\PivotGridControl.svg" />
     <Resource Include="Images\DX\SchedulerControl.svg" />
     <Resource Include="Images\DX\SpreadsheetControl.svg" />
-    <PackageReference Include="DevExpress.Wpf.Demos" Version="21.2.7" />
-    <PackageReference Include="DevExpress.Wpf" Version="21.2.7" />
-    <PackageReference Include="DevExpress.Wpf.Themes.All" Version="21.2.7" />
     
     
     
@@ -243,6 +240,11 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Helper\" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="DevExpress.Wpf" Version="22.1.3" />
+    <PackageReference Include="DevExpress.Wpf.Demos" Version="22.1.3" />
+    <PackageReference Include="DevExpress.Wpf.Themes.All" Version="22.1.3" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Controls\Controls.csproj" />

@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="DevExpress.Wpf" Version="21.2.7" />
+    <PackageReference Include="DevExpress.Wpf" Version="22.1.3" />
   </ItemGroup>
 
   <ItemGroup>
