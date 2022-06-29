@@ -31,6 +31,7 @@ using DevExpress.Xpf.Docking;
 using DevExpress.Xpf.PropertyGrid;
 using Microsoft.Win32;
 using System.Windows.Controls;
+using Verition.UI.Component.Views;
 
 namespace Shell.ViewModels
 {
@@ -64,6 +65,8 @@ namespace Shell.ViewModels
                 Control = new Shell.SampleModules.TestUserControl();
             else if (path == "PositionGridTest")
                 Control = new Shell.SampleModules.GridViewTest2();
+            else if (path == "PnL Report")
+                Control = new ReportView();
             else
                 Control = new Shell.SampleModules.TestUserControl();
             IsActive = true;

@@ -248,6 +248,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Controls\Controls.csproj" />
+    <ProjectReference Include="..\Verition.UI.Component\Verition.UI.Component.csproj" />
   </ItemGroup>
   
   <PropertyGroup>

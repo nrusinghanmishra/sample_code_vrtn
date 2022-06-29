@@ -131,13 +131,8 @@ namespace Controls.SearchControl.ViewModel
         }
         public List<MenuItem> GetMenuItems()
         {
-            return new List<MenuItem>() {
-                new MenuItem(){ Header = "View", MenuItemType = MenuItemType.SubItem, IsMRU = false },
-                new MenuItem(){ Header = "View 1", MenuItemType = MenuItemType.SubItem, IsMRU = false },
-                new MenuItem(){ Header = "View 2", MenuItemType = MenuItemType.SubItem, IsMRU = false },
-                new MenuItem(){ Header = "View 3", MenuItemType = MenuItemType.SubItem, IsFavourite = false },
-                new MenuItem(){ Header = "View 4", MenuItemType = MenuItemType.SubItem, IsFavourite = false },
-                new MenuItem(){ Header = "View 5", MenuItemType = MenuItemType.SubItem, IsFavourite = false },
+            return new List<MenuItem>() {             
+                new MenuItem(){ Header = "PnL Report", MenuItemType = MenuItemType.SubItem, IsFavourite = false },
                 new MenuItem(){ Header = "GridTest", MenuItemType = MenuItemType.SubItem, IsMRU = false },
                 new MenuItem(){ Header = "TestData", MenuItemType = MenuItemType.SubItem, IsMRU = false },
                 
