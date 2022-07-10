@@ -23,7 +23,9 @@
                  x:Name="MainWindowTest"
                  DataContext="{dxmvvm:ViewModelSource Type=viewModels:MainViewModel}">
     <dx:ThemedWindow.ToolbarItems>
+        
         <StackPanel Width="{Binding  ActualWidth, ElementName=MainWindowTest}" VerticalAlignment="Center" HorizontalAlignment="Center">
+            
             <controls:SearchControl DockPanel.Dock="Right"   >
                 <dxmvvm:Interaction.Behaviors>
                     <dxmvvm:EventToCommand EventName="ItemDoubleClicked" Command="{Binding DataContext.OpenViewCommand, RelativeSource={RelativeSource AncestorType=Window}}" PassEventArgsToCommand="True">
@@ -32,6 +34,9 @@
             </controls:SearchControl>
         </StackPanel>
     </dx:ThemedWindow.ToolbarItems>
+    <dx:ThemedWindow.HeaderItems>
+        <dxb:MainMenuControl VerticalAlignment="Center"/>
+    </dx:ThemedWindow.HeaderItems>
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>

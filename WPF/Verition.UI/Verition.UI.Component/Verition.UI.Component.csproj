@@ -4,7 +4,6 @@
     <TargetFramework>net5.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
-    <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <ItemGroup>
@@ -12,15 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="SearchControl\View\SearchControl.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Page Update="SearchControl\View\SearchControl.xaml">
-      <SubType>Designer</SubType>
-    </Page>
+    <ProjectReference Include="..\Verition.UI.Common\Verition.UI.Common.csproj" />
   </ItemGroup>
 
 </Project>
