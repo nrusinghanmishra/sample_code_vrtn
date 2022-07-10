@@ -29,6 +29,7 @@ using Microsoft.Win32;
 using System;
 using Shell;
 using Controls.SearchControl.View;
+using Controls.SearchControl.Model;
 
 namespace Shell.ViewModels
 {
@@ -213,9 +214,16 @@ namespace Shell.ViewModels
             if (activateOnOpen && workspace.IsOpened)
                 SetActiveWorkspace(workspace);
         }
-        bool ActivateDocument(string path)
+        private bool ActivateDocument(string path)
         {
             var document = GetDocument(path);
+            bool isFound = document != null;
+            if (isFound) document.IsActive = true;
+            return isFound;
+        }
+        private bool ActivateDocument(Controls.SearchControl.Model.MenuItem menuItem)
+        {
+            var document = GetDocument(menuItem);
             bool isFound = document != null;
             if (isFound) document.IsActive = true;
             return isFound;
@@ -294,6 +302,12 @@ namespace Shell.ViewModels
                 GetSeparator(), loadLayout, saveLayout
             };
         }
+
+        DocumentViewModel GetDocument(MenuItem menuItem)
+        {
+            return Workspaces.OfType<DocumentViewModel>().FirstOrDefault(x => x.FilePath == menuItem.Header);
+        }
+
         DocumentViewModel GetDocument(string filePath)
         {
             return Workspaces.OfType<DocumentViewModel>().FirstOrDefault(x => x.FilePath == filePath);
@@ -352,11 +366,11 @@ namespace Shell.ViewModels
                 foreach (WorkspaceViewModel workspace in e.OldItems)
                     workspace.RequestClose -= OnWorkspaceRequestClose;
         }
-        void OpenItem(string filePath)
+        void OpenItem(Controls.SearchControl.Model.MenuItem menuItem)
         {
-            if (ActivateDocument(filePath)) return;
+            if (ActivateDocument(menuItem)) return;
             lastOpenedItem = CreateDocumentViewModel();
-            lastOpenedItem.OpenItemByPath(filePath);
+            lastOpenedItem.OpenItemByPath(menuItem);
             OpenOrCloseWorkspace(lastOpenedItem);
         }
         void SetActiveWorkspace(WorkspaceViewModel workspace)
@@ -386,6 +400,7 @@ namespace Shell.ViewModels
         }
 
         public virtual void OpenItemByPath(string path) { }
+        public virtual void OpenItemByPath(MenuItem path) { }
     }
     public abstract class WorkspaceViewModel : ViewModel
     {

@@ -2,6 +2,15 @@
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup />
   <ItemGroup>
+    <Compile Update="SampleModules\GenericGridView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="SampleModules\GenericQueryView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="SampleModules\GridViewTest2.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="SampleModules\TestUserControl.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -10,7 +19,16 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Page Update="SampleModules\GenericGridView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="SampleModules\GenericQueryView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="SampleModules\GridViewTest.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="SampleModules\GridViewTest2.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="SampleModules\TestUserControl.xaml">

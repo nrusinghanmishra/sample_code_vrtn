@@ -140,7 +140,10 @@ namespace Controls.SearchControl.ViewModel
                 new MenuItem(){ Header = "View 5", MenuItemType = MenuItemType.SubItem, IsFavourite = false },
                 new MenuItem(){ Header = "GridTest", MenuItemType = MenuItemType.SubItem, IsMRU = false },
                 new MenuItem(){ Header = "TestData", MenuItemType = MenuItemType.SubItem, IsMRU = false },
-                
+                new MenuItem(){ Header = "PositionGridTest", MenuItemType = MenuItemType.SubItem, IsMRU = false },
+
+
+
                 };
         }
        

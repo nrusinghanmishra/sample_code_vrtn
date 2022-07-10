@@ -1,0 +1,81 @@
+<Window x:Class="ComboBoxEdit_CreatingCheckedComboBox.Window1"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+        xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+        xmlns:local="clr-namespace:ComboBoxEdit_CreatingCheckedComboBox"
+        xmlns:localVM="clr-namespace:ComboBoxEdit_CreatingCheckedComboBox.ViewModels"
+        Title="Checked ComboBox"
+        xmlns:dxeh="http://schemas.devexpress.com/winfx/2008/xaml/editors/internal"
+        Height="200"
+        Width="350">
+    <Window.DataContext>
+        <localVM:MyViewModel />
+    </Window.DataContext>
+    <Window.Resources>
+        <DataTemplate x:Key="MyItemTemplate">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="{Binding ID}" Margin="0,0,10,0" Grid.Column="0"/>
+                <TextBlock Text="{Binding Name}"  Grid.Column="1"></TextBlock>
+            </Grid>
+            
+            
+                       
+        </DataTemplate>
+        <ControlTemplate TargetType="{x:Type dxe:ListBoxEditItem}" x:Key="ItemTemplate">
+            <Border Background="Transparent" SnapsToDevicePixels="True">
+                <dxe:CheckEdit x:Name="checkEdit" HorizontalAlignment="Stretch" Padding="3,0,0,0"  Checked="checkEdit_Checked_1"
+                               
+                                                    dx:FocusHelper2.Focusable="False"
+                                                    dxeh:ControlHelper.IsFocused="{Binding Path=IsKeyboardFocused, 
+                                        RelativeSource={RelativeSource TemplatedParent}}" 
+                                                    ShowBorder="{Binding Path=(dxe:BaseEdit.OwnerEdit).ShowBorder, 
+                                        RelativeSource={RelativeSource TemplatedParent}}" IsHitTestVisible="True" 
+                                                    IsChecked="{Binding Path=IsSelected, 
+                                        RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}" 
+                                                    HorizontalContentAlignment="{Binding Path=(dxe:BaseEdit.OwnerEdit).HorizontalContentAlignment, 
+                                        RelativeSource={RelativeSource TemplatedParent}}"
+                                                    VerticalContentAlignment="{Binding Path=(dxe:BaseEdit.OwnerEdit).VerticalContentAlignment, 
+                                        RelativeSource={RelativeSource TemplatedParent}}">
+                    <ContentPresenter />
+                </dxe:CheckEdit>
+            </Border>
+            <ControlTemplate.Triggers>
+                <DataTrigger Binding="{Binding Path=(dxe:BaseEdit.OwnerEdit).ShowBorder, RelativeSource={RelativeSource Self}}" 
+                                                    Value="False">
+                    <Setter Property="Margin" TargetName="checkEdit" Value="0,0,0,0" />
+                </DataTrigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+        <Style x:Key="ComboBoxEditItemStyle" TargetType="{x:Type dxe:ComboBoxEditItem}">
+            <Setter Property="Template" Value="{StaticResource ItemTemplate}"/>
+            <!--<Setter Property="Template" Value="{StaticResource ComboBoxEditItemContainerTemplate}"/>-->
+            <Setter Property="Height" Value="32"/>
+            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+        </Style>
+    </Window.Resources>
+    <DockPanel>
+        <local:CustomComboboxEdit DockPanel.Dock="Top" x:Name="comboEdit"
+                                  
+                          Margin="10,0,10,0"
+                          SeparatorString="; "
+                            DisplayMember="Name"
+                          EditValue="{Binding SelectedCustomers, Converter={local:SelectedItemsConverter}, UpdateSourceTrigger=PropertyChanged}"
+                          ItemsSource="{Binding Customers}"
+                          ItemContainerStyle="{StaticResource ComboBoxEditItemStyle}"
+                          ItemTemplate="{StaticResource MyItemTemplate}">
+            <dxe:ComboBoxEdit.StyleSettings>
+                <dxe:CheckedComboBoxStyleSettings />
+            </dxe:ComboBoxEdit.StyleSettings>
+        </local:CustomComboboxEdit>
+        <dxe:ListBoxEdit Margin="10,10,10,10"
+                         DisplayMember="Name"
+                         ItemsSource="{Binding SelectedCustomers}" />
+    </DockPanel>
+</Window>

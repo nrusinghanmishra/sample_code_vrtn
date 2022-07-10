@@ -183,6 +183,10 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="SampleModules\GenericGridViewViewModel.cs" />
+    <Compile Include="SampleModules\GenericGridView.xaml.cs" />
+    <Compile Include="SampleModules\GenericQueryView.xaml.cs" />
+    <Compile Include="SampleModules\GenericQueryViewViewModel.cs" />
     <Compile Include="SampleModules\GridViewTest.xaml.cs" />
     <Compile Include="SampleModules\GridViewTest2.xaml.cs" />
     <Compile Include="SampleModules\SampleData.cs" />
@@ -200,6 +204,12 @@
     <Page Include="Resources.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="SampleModules\GenericGridView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SampleModules\GenericQueryView.xaml">
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="SampleModules\GridViewTest.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>

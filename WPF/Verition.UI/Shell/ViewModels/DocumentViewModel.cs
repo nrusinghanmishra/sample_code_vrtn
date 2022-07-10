@@ -53,6 +53,20 @@ namespace Shell.ViewModels
         public string Footer { get; protected set; }
         protected override string WorkspaceName { get { return "DocumentHost"; } }
 
+        public override void OpenItemByPath(Controls.SearchControl.Model.MenuItem menuItem)
+        {
+            DisplayName = menuItem.Header;
+            FilePath = menuItem.Header;
+            if (path == "GridTest")
+                Control = new Modules.GridViewTest();
+            else if (path == "TestData")
+                Control = new Shell.SampleModules.TestUserControl();
+            else if (path == "PositionGridTest")
+                Control = new Shell.SampleModules.GenericGridView();
+            else
+                Control = new Shell.SampleModules.TestUserControl();
+            IsActive = true;
+        }
 
         public override void OpenItemByPath(string path)
         {
@@ -63,7 +77,7 @@ namespace Shell.ViewModels
             else if (path == "TestData")
                 Control = new Shell.SampleModules.TestUserControl();
             else if (path == "PositionGridTest")
-                Control = new Shell.SampleModules.GridViewTest2();
+                Control = new Shell.SampleModules.GenericGridView();
             else
                 Control = new Shell.SampleModules.TestUserControl();
             IsActive = true;
